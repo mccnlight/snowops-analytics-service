@@ -294,7 +294,7 @@ func (h *Handler) handleError(c *gin.Context, err error) {
 	case errors.Is(err, service.ErrNotFound):
 		c.JSON(http.StatusNotFound, errorResponse(err.Error()))
 	default:
-		h.log.Error().Err(err).Msg("handler error")
+		h.log.Error().Err(err).Str("error_type", "unhandled").Msg("handler error")
 		c.JSON(http.StatusInternalServerError, errorResponse("internal error"))
 	}
 }

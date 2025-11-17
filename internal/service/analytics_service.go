@@ -41,6 +41,9 @@ func (s *AnalyticsService) GetDashboard(ctx context.Context, principal model.Pri
 
 	scope, err := s.scopes.ResolveScope(ctx, principal)
 	if err != nil {
+		if errors.Is(err, repository.ErrScopeUnsupported) {
+			return nil, ErrPermissionDenied
+		}
 		return nil, err
 	}
 
