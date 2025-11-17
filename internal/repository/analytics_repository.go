@@ -309,7 +309,7 @@ func (r *AnalyticsRepository) CameraLoad(ctx context.Context, scope model.Scope,
 	subErrors := r.db.WithContext(ctx).
 		Table("trips").
 		Select("camera_id, COUNT(*) AS cnt").
-		Where("camera_id IS NOT NULL AND status IN ? AND entry_at BETWEEN ? AND ?",
+		Where("camera_id IS NOT NULL AND status::text IN ? AND entry_at BETWEEN ? AND ?",
 			[]string{"NO_LPR_EVENT", "NO_VOLUME_EVENT", "CAMERA_ERROR", "MISMATCH_PLATE"}, rng.From, rng.To).
 		Group("camera_id")
 
