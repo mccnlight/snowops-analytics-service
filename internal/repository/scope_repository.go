@@ -48,6 +48,13 @@ func (r *ScopeRepository) ResolveScope(ctx context.Context, principal model.Prin
 		scope.ContractorIDs = []uuid.UUID{principal.OrgID}
 		scope.OrganizationIDs = []uuid.UUID{principal.OrgID}
 		return scope, nil
+	case principal.IsLandfill():
+		// Landfill sees only their own organization's data (similar to contractor)
+		scope.Type = model.ScopeContractor
+		scope.OrgID = &principal.OrgID
+		scope.ContractorIDs = []uuid.UUID{principal.OrgID}
+		scope.OrganizationIDs = []uuid.UUID{principal.OrgID}
+		return scope, nil
 	case principal.IsToo():
 		scope.Type = model.ScopeTechnical
 		scope.TechnicalOnly = true
