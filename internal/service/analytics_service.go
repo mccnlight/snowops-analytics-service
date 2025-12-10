@@ -277,7 +277,7 @@ func (s *AnalyticsService) GetContractAnalytics(ctx context.Context, principal m
 }
 
 func (s *AnalyticsService) GetAreaAnalytics(ctx context.Context, principal model.Principal, filter model.AnalyticsFilter) ([]model.CleaningAreaAnalytics, error) {
-	if principal.IsDriver() || principal.IsToo() {
+	if principal.IsDriver() {
 		return nil, ErrPermissionDenied
 	}
 
@@ -296,7 +296,7 @@ func (s *AnalyticsService) GetAreaAnalytics(ctx context.Context, principal model
 }
 
 func (s *AnalyticsService) GetDriverKPIs(ctx context.Context, principal model.Principal, filter model.AnalyticsFilter) ([]model.DriverKPI, error) {
-	if principal.IsDriver() || principal.IsToo() {
+	if principal.IsDriver() {
 		return nil, ErrPermissionDenied
 	}
 
@@ -315,7 +315,7 @@ func (s *AnalyticsService) GetDriverKPIs(ctx context.Context, principal model.Pr
 }
 
 func (s *AnalyticsService) GetVehicleKPIs(ctx context.Context, principal model.Principal, filter model.AnalyticsFilter) ([]model.VehicleKPI, error) {
-	if principal.IsDriver() || principal.IsToo() {
+	if principal.IsDriver() {
 		return nil, ErrPermissionDenied
 	}
 
@@ -334,7 +334,7 @@ func (s *AnalyticsService) GetVehicleKPIs(ctx context.Context, principal model.P
 }
 
 func (s *AnalyticsService) GetTechnicalAnalytics(ctx context.Context, principal model.Principal, rng model.DateRange) (*model.TechnicalAnalytics, error) {
-	if !(principal.IsToo() || principal.IsAkimat() || principal.IsKgu()) {
+	if !(principal.IsLandfill() || principal.IsAkimat() || principal.IsKgu()) {
 		return nil, ErrPermissionDenied
 	}
 
